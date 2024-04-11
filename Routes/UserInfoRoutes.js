@@ -80,7 +80,7 @@ router.get('/get', async (req, res) => {
     let usersRes = await getUserInfo();
 
 
-    res.status(200).json({ staus: "ok", message: "Healthy, good to go", userInfo: { userName: usersRes, userHoldings: holdingsRes[0] } });
+    return res.status(200).json({ status: "ok", message: "Healthy, good to go", userInfo: { userName: usersRes, userHoldings: holdingsRes[0] } });
 });
 
 module.exports = router;

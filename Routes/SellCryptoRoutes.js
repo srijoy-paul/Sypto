@@ -4,13 +4,17 @@ require('dotenv').config();
 
 const request = require('request')
 const crypto = require('crypto');
+const { validateSellOrderRequest } = require('../middlewares/validation');
 
 const apiKey = process.env.COIN_DCX_API_KEY;
 const apiSeceretKey = process.env.COIN_DCX_API_SECRET_KEY;
 const baseurl = process.env.COIN_DCX_BASE_URL;
 
 
-router.post("/sellOrder", async (req, res) => {
+router.post("/sellOrder", validateSellOrderRequest, async (req, res) => {
+    const { market, pricePerUnit_toSell, totalQuantity_toSell } = req.body;
+
+    // console.log(typeof market, typeof pricePerUnit_toSell, typeof totalQuantity_toSell);
 
     const timeStamp = Math.floor(Date.now());
 
@@ -21,9 +25,9 @@ router.post("/sellOrder", async (req, res) => {
     const body = {
         "side": "buy",
         "order_type": "limit_order",
-        "market": "TRXBTC",
-        "price_per_unit": "0.00000435",
-        "total_quantity": 200,
+        "market": market,
+        "price_per_unit": pricePerUnit_toSell,
+        "total_quantity": totalQuantity_toSell,
         "timestamp": timeStamp,
         "client_order_id": "2022.02.14-btcinr_1"
     }
@@ -43,6 +47,7 @@ router.post("/sellOrder", async (req, res) => {
 
     request.post(options, function (error, response, body) {
         console.log(body);
+        return res.status(body.code).json({ status: body.status, message: body.message })
     })
 
 

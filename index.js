@@ -10,6 +10,7 @@ const priceUpdatesRouter = require("./Routes/PriceUpdatesRoutes");
 // const apiKey = process.env.ANGLE_BROKING_API_KEY;
 
 app.use(cors());
+app.use(express.json());
 app.use("/api/v1/UserInfo", userInfoRouter);
 app.use("/api/v1/Buy", buyCryptoRouter);
 app.use("/api/v1/Sell", sellCryptoRouter);
