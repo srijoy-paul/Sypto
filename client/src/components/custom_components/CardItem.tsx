@@ -13,7 +13,7 @@ function CardItem({ label, value }) {
           <Label htmlFor="name">{label}</Label>
           <Input
             id="username"
-            value={value}
+            defaultValue={value}
             placeholder="Name of your project"
           />
         </div>

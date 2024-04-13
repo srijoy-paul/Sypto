@@ -21,11 +21,23 @@ router.post("/realtime", async (req, res) => {
 
             socket.emit('join', { 'channelName': "currentPrices@futures@rt" });
             isSocketConnected = true;
-            res.status(200).json({ message: 'Socket connection established' });
+            // res.status(200).json({ message: 'Socket connection established' });
         });
-
+        let i = 1;
         socket.on('currentPrices@futures#update', (response) => {
-            console.log(response.data);
+
+            if (i == 1) {
+                const parsedData = JSON.parse(response.data);
+
+                if (parsedData.prices['B-ETH_USDT'].ls ?? parsedData.prices['B-ETH_USDT'].ls) {
+                    console.log(parsedData.prices['B-ETH_USDT']);
+                    res.status(200).json({ ETH: parsedData.prices['B-ETH_USDT'] });
+                    i++;
+                    // return;
+                }
+            }
+
+            // res.send(response.data);
         });
 
         socket.on('disconnect', () => {

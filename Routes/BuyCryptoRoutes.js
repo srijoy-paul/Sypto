@@ -46,7 +46,7 @@ router.post("/buyOrder", validateBuyOrderRequest, async (req, res) => {
 
         request.post(options, function (error, response, body) {
             console.log(JSON.stringify(body, null, 2));
-            return res.status(body.code).json({ status: body.status, message: body.message })
+            return res.status(200).json({ status: body.status, message: body.message })
         })
     }
 
