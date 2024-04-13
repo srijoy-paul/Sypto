@@ -48,8 +48,8 @@ function RealtimePrice() {
     };
   };
   return (
-    <div className="container w-[550px] border-2 border-violet-300 my-2 py-2 rounded-lg">
-      <CardHeader className="my-2 rounded-lg bg-blue-100">
+    <div className="container w-[550px] border-2 border-violet-300 py-2 mb-2 rounded-lg ">
+      <CardHeader className="my-1 rounded-lg bg-blue-100">
         <CardTitle>Realtime</CardTitle>
         <CardDescription>
           Here you will get realtime update of subscribed currency

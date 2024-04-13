@@ -21,26 +21,29 @@ import { Label } from "../ui/label";
 import { Button } from "../ui/button";
 import { CardDescription, CardHeader, CardTitle } from "../ui/card";
 
-function BuyOrderCard() {
+function SellOrderComponent() {
   const [mssg, setMssg] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const form = useForm({
     defaultValues: {
       market: "TRXBTC",
-      pricePerUnit: "0.00000035",
-      totalQuantity: 200,
+      pricePerUnit_toSell: "0.00000035",
+      totalQuantity_toSell: 200,
     },
   });
   const handleSubmit = async (formDataJson) => {
     console.log(formDataJson);
     setIsLoading(true);
-    const response = await fetch("http://localhost:3127/api/v1/Buy/buyOrder", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formDataJson),
-    });
+    const response = await fetch(
+      "http://localhost:3127/api/v1/Sell/sellOrder",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formDataJson),
+      }
+    );
     setTimeout(() => {
       setIsLoading(false);
     }, 2000);
@@ -51,12 +54,14 @@ function BuyOrderCard() {
   return (
     <Form {...form}>
       <form
-        className="container w-[550px] border-2 border-violet-300  rounded-lg flex-1"
+        className="container w-[550px] border-2 border-violet-300 rounded-lg flex-1"
         onSubmit={form.handleSubmit(handleSubmit)}
       >
         <CardHeader className="my-2 rounded-lg bg-violet-100">
-          <CardTitle>Buy Order</CardTitle>
-          <CardDescription>Here you can place a buy order</CardDescription>
+          <CardTitle>Sell your Holdings</CardTitle>
+          <CardDescription>
+            Here you can place a bid for holdings
+          </CardDescription>
         </CardHeader>
         <FormField
           control={form.control}
@@ -88,7 +93,7 @@ function BuyOrderCard() {
 
         <FormField
           control={form.control}
-          name="pricePerUnit"
+          name="pricePerUnit_toSell"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Price Per Unit</FormLabel>
@@ -105,7 +110,7 @@ function BuyOrderCard() {
 
         <FormField
           control={form.control}
-          name="totalQuantity"
+          name="totalQuantity_toSell"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Total Quantity</FormLabel>
@@ -129,11 +134,11 @@ function BuyOrderCard() {
           )}
         </div>
         <div className="my-2 flex place-content-center">
-          <Button type="submit">Buy Now</Button>
+          <Button type="submit">Sell</Button>
         </div>
       </form>
     </Form>
   );
 }
 
-export default BuyOrderCard;
+export default SellOrderComponent;

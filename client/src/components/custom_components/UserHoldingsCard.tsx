@@ -32,7 +32,7 @@ function UserHoldingsCard() {
     })();
   }, []);
   return (
-    <Card className="mt-2 border-2 border-purple-300 container w-[550px]">
+    <Card className="my-2 ml-2 border-2 border-purple-300 container w-[550px]">
       <CardHeader className="my-2 rounded-lg bg-purple-200">
         <CardTitle>User Holdings</CardTitle>
         <CardDescription>User Info and Current Holdings</CardDescription>

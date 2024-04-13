@@ -47,7 +47,7 @@ router.post("/sellOrder", validateSellOrderRequest, async (req, res) => {
 
     request.post(options, function (error, response, body) {
         console.log(body);
-        return res.status(body.code).json({ status: body.status, message: body.message })
+        return res.status(body.code).json({ status: body.status, message: "You donot have any current holdings" })
     })
 
 
