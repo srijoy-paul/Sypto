@@ -1,0 +1,181 @@
+openapi: 3.0.0
+info:
+  title: Sypto Assignment - Consume the API of any broker
+  description: API allows you to seamlessly fetch current holdings, place buy and sell orders, receive postbacks from the broker, and access real-time prices via websockets.
+  version: 1.0.0
+  contact:
+    email: srijoykumar1507@gmail.com
+    url: https://github.com/srijoy-paul
+servers:
+  - url: http://localhost:3127/api/v1/UserInfo/get
+    description: Api url to fetch the User Information and their Holdings on CoinDCX
+
+  - url: http://localhost:3127/api/v1/Buy/buyOrder
+    description: Api url to place buy order using the authorized User's account on CoinDCX
+
+  - url: http://localhost:3127/api/v1/Sell/sellOrder
+    description: Api url to sell the commodities available on the authorized User's account on CoinDCX
+
+  - url: http://localhost:3127/api/v1/commodity/orderStatus
+    description: Api url to get the order status placed by the authorized User's account on CoinDCX
+
+  - url: http://localhost:3127/api/v1/PriceUpdates/realtime
+    description: Api url to get the realtime status of any subscribed currency on CoinDCX
+
+paths:
+  /UserInfo/get:
+    get:
+      summary: Fetch User Profile information and User Holdings on Coin DCX
+
+      responses:
+        "200":
+          description: returns an object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  userInfo:
+                    type: object
+                    properties:
+                      userName:
+                        type: object
+                      userHoldings:
+                        type: object
+
+  /Buy/buyOrder:
+    post:
+      summary: Place a buy order for any commodity on Coin DCX
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                market:
+                  type: string
+                  example: "TRXBTC"
+                pricePerUnit:
+                  type: string
+                totalQuantity:
+                  type: string
+
+      responses:
+        "200":
+          description: returns an object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+        "500":
+          description: returns an error object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: error
+
+  /Sell/sellOrder:
+    post:
+      summary: Place a sell order for any commodity holdings on the user account on Coin DCX
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                market:
+                  type: string
+                  example: "TRXBTC"
+                pricePerUnit_toSell:
+                  type: string
+                totalQuantity_toSell:
+                  type: string
+
+      responses:
+        "400":
+          description: returns an object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                    example: "You donot have any current holdings"
+
+  /commodity/orderStatus:
+    post:
+      summary: Get the order status for any request on the user account on Coin DCX
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                orderId:
+                  type: string
+
+      responses:
+        "400":
+          description: returns an object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  orderId:
+                    type: string
+
+  /PriceUpdates/realtime:
+    post:
+      summary: Get the realtime updates on any subscribed currency on Coin DCX
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                orderId:
+                  type: string
+
+      responses:
+        "200":
+          description: returns an object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ETH:
+                    type: object
+                    properties:
+                      v:
+                        type: string
+                      ls:
+                        type: string
+                      btST:
+                        type: string
